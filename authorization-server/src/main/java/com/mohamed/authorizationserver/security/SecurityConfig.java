@@ -40,5 +40,15 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    @Bean
+    @Order(2)
+    public SecurityFilterChain appSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .formLogin(Customizer.withDefaults())
+                .authorizeHttpRequests(requestMatcherRegistry -> {
+                    requestMatcherRegistry.anyRequest().authenticated();
+                })
+                .build();
 
+    }
 }
